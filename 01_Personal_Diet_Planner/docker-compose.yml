@@ -1,0 +1,21 @@
+services:
+  api:
+    build: ./backend
+    environment:
+      APP_ENV: production
+      SECRET_KEY: ${SECRET_KEY:?Set SECRET_KEY to at least 32 random characters}
+      DATABASE_URL: sqlite:////app/data/diet_planner.db
+      STORAGE_BACKEND: local
+      STORAGE_DIR: /app/data/objects
+      CORS_ORIGINS: http://localhost:5173,http://localhost:8080
+    ports: ["8000:8000"]
+    volumes: ["diet_data:/app/data"]
+  web:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_URL: http://localhost:8000
+    ports: ["8080:80"]
+    depends_on: [api]
+volumes:
+  diet_data:
