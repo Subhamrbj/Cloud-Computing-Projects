@@ -1,0 +1,15 @@
+{
+  "guest_demo": "pass",
+  "session_reload": "pass",
+  "automatic_watering": "pass",
+  "manual_watering": "pass",
+  "pause_and_stop": "pass",
+  "settings": "pass",
+  "charts": "pass",
+  "alerts": "pass",
+  "mobile_overflow": false,
+  "registration": "pass",
+  "password_recovery": "pass",
+  "account_deletion": "pass",
+  "console_errors": []
+}

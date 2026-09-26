@@ -1,0 +1,8 @@
+import React,{useState} from 'react';
+import {api} from './api';
+export default function AccountSettings({isDemo,onDeleted}){
+ const [open,setOpen]=useState(false),[error,setError]=useState(''),[busy,setBusy]=useState(false);
+ if(isDemo)return <div className="account-settings"><h3>Temporary demo garden</h3><p>This garden is private to your session and expires after one hour. Sign out and create an account to keep a garden.</p></div>;
+ async function remove(e){e.preventDefault();setBusy(true);setError('');try{await api('/auth/account',{method:'DELETE',body:JSON.stringify({password:new FormData(e.currentTarget).get('password')})});onDeleted();}catch(e){setError(e.message);}finally{setBusy(false);}}
+ return <div className="account-settings"><h3>Account & privacy</h3><p>Delete your account and all its plants, readings, watering records and alerts.</p><button className="outline danger-text" onClick={()=>setOpen(true)}>Delete my account</button>{open&&<div className="modal-backdrop"><section className="modal" role="dialog" aria-modal="true" aria-label="Delete account"><button className="close" aria-label="Cancel deletion" onClick={()=>setOpen(false)}>×</button><h2>Permanently delete your garden?</h2><p>This removes your account and its stored data. It cannot be undone.</p><form onSubmit={remove}><label>Confirm your password<input name="password" type="password" required autoComplete="current-password"/></label>{error&&<p className="error" role="alert">{error}</p>}<button className="primary danger" disabled={busy}>Permanently delete account</button></form></section></div>}</div>;
+}
