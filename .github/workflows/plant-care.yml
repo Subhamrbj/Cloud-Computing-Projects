@@ -1,0 +1,27 @@
+name: Verify smart plant care
+on:
+  workflow_dispatch:
+  push:
+    paths: ['05_Cloud_Connected_Smart_Plant_Care/**', '.github/workflows/plant-care.yml']
+  pull_request:
+    paths: ['05_Cloud_Connected_Smart_Plant_Care/**', '.github/workflows/plant-care.yml']
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 05_Cloud_Connected_Smart_Plant_Care
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: pip install -r requirements.txt
+      - run: python -m pytest -q
+      - run: npm ci && npm run build
+        working-directory: 05_Cloud_Connected_Smart_Plant_Care/frontend
