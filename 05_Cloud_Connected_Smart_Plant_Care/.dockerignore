@@ -1,0 +1,10 @@
+.env
+.demo-credentials.json
+*.db
+**/__pycache__
+**/node_modules
+frontend/dist
+.git
+.venv
+screenshots
+reports
